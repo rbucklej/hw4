@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<script src = "db-Copy.js"></script>    
+<head>
+<h1>Select Bus</h1> 
+<select id="busid" onchange="listid()">
+    <option>--Choose an ID--</option>
+</select>
+<script src="http://maps.google.com/maps/api/js?key=AIzaSyARxs_0QWBQzZ-7tnFIkcz6Tzh5Fr1I0xg"></script>
+<div id="map" style="top:10px; width:1000px; height:500px"></div>
+<p id="demo"></p>
+<script>
+var map;
+var markers = [];
+
+function init(){
+	var myOptions = {
+		zoom      : 13,
+		center    : { lat:42.353350,lng:-71.091525},
+		mapTypeId : google.maps.MapTypeId.ROADMAP
+	};
+	var element = document.getElementById('map');
+  	map = new google.maps.Map(element, myOptions);
+  	setMarkers();
+}
+function setMapOnAll(map) {
+  console.log('inside setMapOnAll'+markers.length)
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+          console.log(markers[i])
+        }
+      }
+
+      // Removes the markers from the map, but keeps them in the array.
+function clearMarkers() {
+  console.log('inside clearMarkers')
+        setMapOnAll(null);
+      }
+// var locations = [];
+function listloc() {  
+  var locations = [];
+buus.forEach(function(inserted){
+  
+    for(var j=0;j<inserted.length;j++){
+        if(document.getElementById("busid").options[document.getElementById("busid").selectedIndex].value===inserted[j].id){
+            locations.push([inserted[j].lat,inserted[j].long])}
+            // console.log([inserted[j].lat,inserted[j].long])
+        }
+        console.log(locations)
+       
+    })
+    setMarkers(locations)
+    return locations
+}
+
+function setMarkers(loc){
+    // listloc()
+    console.log('calling clearMarkers')
+    clearMarkers()
+    console.log('cleared my markers')
+	var icon = 'blue.png';
+  var listl = JSON.stringify(loc)
+console.log(loc)
+        for (var i = 0; i < loc.length; i++) {
+          var location = loc[i]
+          var marker = new google.maps.Marker({
+            position: {lat: location[0], lng: location[1]},
+	    map: map,
+	    icon: icon,
+      // id: bus.id
+      
+  });
+  markers.push(marker)
+}
+}
+
+window.onload = init;
+
+unids=[]
+
+buus.forEach(function(inserted){
+    for(var j=0;j<inserted.length;j++){
+        if(unids.includes(inserted[j].id)){
+            return unids}
+        else{
+            unids.push(inserted[j].id) 
+            }
+        }
+    })
+console.log(unids)
+
+function listid(){
+    id=[]
+buus.forEach(function(inserted){
+    for(var j=0;j<inserted.length;j++){
+        if(document.getElementById("busid").options[document.getElementById("busid").selectedIndex].value===inserted[j].id){
+            id.push(inserted[j])}
+        }
+    })
+    console.log([id[1].lat,id[1].long])
+    document.getElementById("demo").innerHTML = JSON.stringify(id)
+    listloc()
+} 
+
+var select = document.getElementById('busid')
+    for(var i = 0; i < unids.length; i++){
+        var opt = document.createElement('option')
+        opt.value = unids[i]
+        opt.innerHTML = unids[i]
+        select.appendChild(opt)
+    }
+</script>
+</html>

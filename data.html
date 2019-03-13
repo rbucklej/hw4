@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<script src = "db-Copy.js"></script>
+<h1>Select Bus</h1> 
+<select id="busid" onchange="listid()">
+    <option>--Choose an ID--</option>
+</select>
+<p id="demo"></p>
+
+<script>
+
+unids=[]
+
+buus.forEach(function(inserted){
+    for(var j=0;j<inserted.length;j++){
+        if(unids.includes(inserted[j].id)){
+            return unids}
+        else{
+            unids.push(inserted[j].id) 
+            }
+        }
+    })
+console.log(unids)
+
+function listid(){
+    id=[]
+buus.forEach(function(inserted){
+    for(var j=0;j<inserted.length;j++){
+        if(document.getElementById("busid").options[document.getElementById("busid").selectedIndex].value===inserted[j].id){
+            id.push(inserted[j])}
+        }
+    })
+    console.log(id)
+    console.log(JSON.stringify(id))
+    document.getElementById("demo").innerHTML = JSON.stringify(id)
+} 
+
+var select = document.getElementById('busid')
+    for(var i = 0; i < unids.length; i++){
+        var opt = document.createElement('option')
+        opt.value = unids[i]
+        opt.innerHTML = unids[i]
+        select.appendChild(opt)
+    } 
+
+</script>               
+</html>

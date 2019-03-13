@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<script src = "db-Copy.js"></script>
+<h1>Select Bus</h1> 
+<select id="busid"></select>
+
+<script>
+
+unids=[]
+buus.forEach(function(inserted){
+    for(var j=0;j<inserted.length;j++){
+        if(unids.includes(inserted[j].id)){
+            return unids}
+        else{
+            unids.push(inserted[j].id) 
+            }
+        }
+    })
+
+var select = document.getElementById('busid')
+    for(var i = 0; i < unids.length; i++){
+        var opt = document.createElement('option')
+        opt.value = unids[i]
+        opt.innerHTML = unids[i]
+        select.appendChild(opt)
+    } 
+</script>               
+</html>
